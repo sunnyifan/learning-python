@@ -33,12 +33,22 @@ def nearestOdd(n):
     else:
         return math.ceil(n)
 
+def rectanglesOverlapSolutionOne(x1, y1, w1, h1, x2, y2, w2, h2):
+    x_min = min(x1, x2)
+    x_max = max(x1 + w1, x2 + w2)
+    y_min = min(y1, y2)
+    y_max = max(y1 + h1, y2 + h2)
+    return x_max - x_min <= (w1 + w2) and y_max - y_min <= (h1 + h2)
+
 def rectanglesOverlap(x1, y1, w1, h1, x2, y2, w2, h2):
-    if x1 <= x2 and x2 <= (x1 + w1) and y1 <= y2 and y2 <= (y1 + h1):
-        return True
-    else:
+    # if no overlap on x-axis, return False
+    if x1 + w1 < x2 or x2 + w2 < x1:
         return False
-        
+    # if no overlap on y-axis, return False
+    if y1 + h1 < y2 or y2 + h2 < y1:
+        return False
+    # if neither of the above applies, they overlap
+    return True
 
 def isPerfectSquare(n):
     return 42
