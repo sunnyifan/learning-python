@@ -33,14 +33,14 @@ def nearestOdd(n):
     else:
         return math.ceil(n)
 
-def rectanglesOverlapSolutionOne(x1, y1, w1, h1, x2, y2, w2, h2):
+def rectanglesOverlap(x1, y1, w1, h1, x2, y2, w2, h2):
     x_min = min(x1, x2)
     x_max = max(x1 + w1, x2 + w2)
     y_min = min(y1, y2)
     y_max = max(y1 + h1, y2 + h2)
     return x_max - x_min <= (w1 + w2) and y_max - y_min <= (h1 + h2)
 
-def rectanglesOverlap(x1, y1, w1, h1, x2, y2, w2, h2):
+def rectanglesOverlapAltSolution(x1, y1, w1, h1, x2, y2, w2, h2):
     # if no overlap on x-axis, return False
     if x1 + w1 < x2 or x2 + w2 < x1:
         return False
@@ -51,7 +51,15 @@ def rectanglesOverlap(x1, y1, w1, h1, x2, y2, w2, h2):
     return True
 
 def isPerfectSquare(n):
-    return 42
+    if isinstance(n, (int)) and n >= 0:         # type() disallowed
+        return roundHalfUp(n ** 0.5) ** 2 == n
+    else:
+        return False
+
+def isPerfectSquareAltSolution(n):        
+    if not isinstance(n, (int)) and n >= 0:     # double negative not ideal but 
+        return False                            # rejects irrelevant data upfront
+    return roundHalfUp(n ** 0.5) ** 2 == n
 
 def getKthDigit(n, k):
     return 42
