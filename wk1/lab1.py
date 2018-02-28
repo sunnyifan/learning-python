@@ -57,18 +57,36 @@ def isPerfectSquare(n):
         return False
 
 def isPerfectSquareAltSolution(n):        
-    if not isinstance(n, (int)) and n >= 0:     # double negative not ideal but 
-        return False                            # rejects irrelevant data upfront
+    if not isinstance(n, (int)) and n >= 0:    # double negative not ideal but 
+        return False                           # rejects irrelevant data upfront
     return roundHalfUp(n ** 0.5) ** 2 == n
 
 def getKthDigit(n, k):
-    return 42
+    return abs(n) // (10 ** k) % 10
 
 def setKthDigit(n, k, d):
-    return 42
+    delta = getKthDigit(n,k) * (10 ** k) - d * (10 ** k)
+    if n >= 0:
+        return n - delta
+    else:
+        return n + delta
+
+def setKthDigitAltSolution(n, k, d):        # ternary style (3 inputs)
+    delta = getKthDigit(n,k) * (10 ** k) - d * (10 ** k)
+    return (n - delta) if n >= 0 else (n + delta)
 
 def riverCruiseUpstreamTime(totalTime, totalDistance, riverCurrent):
-    return 42
+    t = totalTime
+    d = totalDistance
+    r = riverCurrent
+# if x is the upstreemSpeed and solve the equation using the Quadratic Formula
+    a =  2 * t
+    b = 4 * t * r - 2 * d
+    c = -2 * d * r
+    x = (-b + (b ** 2 - 4 * a * c) ** 0.5) / (2 * a)
+ # Alt, x = ((4 * t ** 2 * r ** 2 + d**2) ** 0.5-2 * t * r + d) / (2 * t)
+    result = (d / 2) / x
+    return result
 
 #################################################
 # Lab1 Test Functions
