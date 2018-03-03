@@ -66,32 +66,18 @@ def bonusFindIntRootsOfCubic(a, b, c, d):
     q = p**3 + (b*c - 3*a*d) / (6 * (a**2))
     r = c / (3*a)
     intermediate = (q**2 + (r - p**2)**3) ** (0.5)
-    x1 = p + (q + intermediate) ** (1/3) + (q - intermediate) ** (1/3)
+    x1 = p + (q + intermediate) ** (1/3) + (q - intermediate) ** (1/3)    
     x1 = roundHalfUp(x1.real)
-    print("hey", x1)
-    ax = a * x1
-    bx = b * x1
-    cx = c * x1 + d
+    ax = a
+    bx = b + a * x1
+    cx = c + b * x1 + a * (x1**2)
     if (bx ** 2 - 4 * ax * cx) < 0:
         return x1
-    elif (bx ** 2 - 4 * ax * cx) == 0:
-        x2 = (-bx + (bx ** 2 - 4 * ax * cx) ** 0.5) / (2 * ax)
-        return min(x1, x2),max(x1, x2)
     else:
-        x2 = (-bx + (bx ** 2 - 4 * ax * cx) ** 0.5) / (2 * ax)
-        x3 = (-bx - (bx ** 2 - 4 * ax * cx) ** 0.5) / (2 * ax)
-        print(x1,x2,x3)
-        return x1, x2, x3
-        
-    """
-    A = c / a - b**2 / (3 * (a**2))
-    B = d / a + 2 * (b**3) / (27 * (a**3)) - b * c / (3 * (a**2))
-    x = ((-B / 2 + ((B**2)/4 + (A**3)/27)**(1/2)) ** (1/3)
-        - (B / 2 + ((B**2)/4 + (A**3)/27)**(1/2)) ** (1/3)
-        - b / (3 * a))
-    return x
-    """
-        
+        x2 = roundHalfUp((-bx + (bx**2 - 4 * ax * cx)**0.5) / (2 * ax))
+        x3 = roundHalfUp((-bx - (bx**2 - 4 * ax * cx)**0.5) / (2 * ax))
+        medium = (x1 + x2 + x3) - max(x1, x2,x3) - min(x1, x2, x3)
+        return min(x1, x2,x3), medium, max(x1, x2, x3)
 
 #################################################
 # Hw1 Test Functions
@@ -176,6 +162,8 @@ def testBonusFindIntRootsOfCubic():
     testFindIntRootsOfCubicCase(2, 5, 33, 7)
     testFindIntRootsOfCubicCase(-18, 24, 3, -8)
     testFindIntRootsOfCubicCase(1, 2, 3, 4)
+    testFindIntRootsOfCubicCase(6, 2, 2, 2)
+    testFindIntRootsOfCubicCase(7, 3, 9, 3)
     print('Passed.')
 
 #################################################
@@ -189,7 +177,7 @@ def main():
         testFabricExcess,
         testIsRightTriangle,
         testColorBlender,
-        # testBonusFindIntRootsOfCubic
+        testBonusFindIntRootsOfCubic
     )
 
 if __name__ == '__main__':

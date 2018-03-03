@@ -80,7 +80,7 @@ def riverCruiseUpstreamTime(totalTime, totalDistance, riverCurrent):
     d = totalDistance
     r = riverCurrent
 # if x is the upstreemSpeed and solve the equation using the Quadratic Formula
-    a =  2 * t
+    a = 2 * t
     b = 4 * t * r - 2 * d
     c = -2 * d * r
     x = (-b + (b ** 2 - 4 * a * c) ** 0.5) / (2 * a)
