@@ -8,7 +8,7 @@ def sumFromMToN(m, n):
 
 print(sumFromMToN(5, 10) == 5+6+7+8+9+10)
 
-# Actually, we don't need a loop here...
+# Function without loop
 def sumFromMToN(m, n):
     return sum(range(m, n+1))
 
@@ -26,7 +26,7 @@ print(sumFromMToN_byFormula(5, 10) == 5+6+7+8+9+10)
 # What if we omit the first parameter?
 def sumToN(n):
     total = 0
-    for x in range(n+1):
+    for x in range(n+1):    # assumed range(0, n+1)
         total += x
     return total
 
@@ -35,7 +35,7 @@ print(sumToN(5) == 0+1+2+3+4+5)
 # What if we add a third parameter?
 def sumEveryKthFromMToN(m, n, k):
     total = 0
-    for x in range(m, n+1, k):
+    for x in range(m, n+1, k):  # third parameter stands for increment
         total += x
     return total
 
@@ -69,20 +69,49 @@ def sumOfOddsFromMToN(m, n):
         # n is even, subtract 1 to start on an odd
         n -= 1
     total = 0
-    for x in range(n, m-1, -2):  # be careful here!
+    for x in range(n, m-1, -2):  # -2 corresponds with inverse order
         total += x
     return total
 
 print(sumOfOddsFromMToN(4, 10) == sumOfOddsFromMToN(5,9) == (5+7+9))
 
 def sumOfOddsFromMToN(m, n):
-    if (m % 2 == 0): m += 1
+    if (m % 2 == 0): m += 1     # if condition in 1 line
     return sum(range(m, n+1, 2))
 
 print(sumOfOddsFromMToN(4, 10) == sumOfOddsFromMToN(5,9) == (5+7+9))
 
 # This is the worst way so far -- too confusing.
 def sumOfOddsFromMToN(m, n):
-    return sum(range(m + (1 - m%2), n+1, 2)) # this works, but it's gross!
+    return sum(range(m + (1 - m%2), n+1, 2)) # this works, but readability..
 
 print(sumOfOddsFromMToN(4, 10) == sumOfOddsFromMToN(5,9) == (5+7+9))
+
+
+# 2. Nested for loops
+def printCoordinates(xMax,yMax):
+    for x in range(xMax+1):
+        for y in range(yMax+1):
+            print('(',x,',',y,')',end = '')
+        print()
+        
+printCoordinates(4,5)
+
+# Some stars
+def printStarRectangle(n):
+    # print an "n x n" rectangle of asterisks
+    for row in range(n):
+        for col in range(n):
+            print('*', end='')
+        print()
+
+printStarRectangle(5)
+
+# Another example
+def printMysteryStarShape(n):
+    for row in range(n):
+        print(row, end='')
+        for col in range(row):
+            print('*', end='')
+        print()
+printMysteryStarShape(5)
