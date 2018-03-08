@@ -115,3 +115,70 @@ def printMysteryStarShape(n):
             print('*', end='')
         print()
 printMysteryStarShape(5)
+
+
+# 3. While loops
+# use while loops when there is an indeterminate number of iterations
+def leftmostDigit(n):
+    n = abs(n)
+    while (n >= 10):
+        n = n // 10
+    return n
+
+print(leftmostDigit(72658489290098) == 7)
+
+# Example: nth positive integer with some property
+# eg: find the nth number that is a multiple of either 4 or 7
+def isMultipleOf4or7(x):
+    return ((x % 4) == 0) or ((x % 7) == 0)
+
+def nthMultipleOf4or7(n):
+    found = 0
+    guess = -1
+    while (found <= n):
+        guess += 1
+        if (isMultipleOf4or7(guess)):
+            found += 1
+    return guess
+
+print("Multiples of 4 or 7: ", end="")
+for n in range(15):
+    print(nthMultipleOf4or7(n), end=" ")
+print()
+
+# Misuse: While loop over a fixed range
+# sum numbers from 1 to 10
+# note:  this works, but you should not use "while" here.
+#        instead, do this with "for" (once you know how)
+def sumToN(n):
+    total = 0
+    counter = 1
+    while (counter <= n):
+        total += counter
+        counter += 1
+    return total
+
+print(sumToN(5) == 1+2+3+4+5)
+
+# Once again, but with a bug
+def buggySumToN(n):
+    # note: this not only uses a "while" instead of a "for" loop,
+    # but it also contains a bug. Ugh.
+    total = 0
+    counter = 0
+    while (counter <= n):
+        counter += 1
+        total += counter
+    return total
+
+print(buggySumToN(5) == 1+2+3+4+5)
+
+# once again, with a for loop:
+# A for loop is the preferred way to loop over a fixed range.
+def sumToN(n):
+    total = 0
+    for counter in range(n+1):
+        total += counter
+    return total
+
+print(sumToN(5) == 1+2+3+4+5)
