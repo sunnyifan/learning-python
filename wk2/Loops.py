@@ -182,3 +182,45 @@ def sumToN(n):
     return total
 
 print(sumToN(5) == 1+2+3+4+5)
+
+
+# 4. break and continue
+for n in range(200):
+    if (n % 3 == 0):
+        continue # skips rest of this pass (rarely a good idea to use "continue")
+    elif (n == 8):
+        break # skips rest of entire loop
+    print(n, end=" ")
+print()
+
+# Infinite "while" loop with break:
+def readUntilDone():
+    linesEntered = 0
+    while (True):
+        response = input("Enter a string (or 'done' to quit): ")
+        if (response == "done"):
+            break
+        print("  You entered: ", response)
+        linesEntered += 1
+    print("Bye!")
+    return linesEntered
+
+linesEntered = readUntilDone()
+print("You entered", linesEntered, "lines (not counting 'done').")
+
+
+# 5. isPrime
+# Note: there are faster/better ways.  We're just going for clarity and simplicity here.
+def isPrime(n):
+    if (n < 2):
+        return False
+    for factor in range(2,n):
+        if (n % factor == 0):
+            return False
+    return True
+
+# And take it for a spin
+for n in range(100):
+    if isPrime(n):
+        print(n, end=" ")
+print()
