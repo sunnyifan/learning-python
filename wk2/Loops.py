@@ -287,3 +287,33 @@ time0 = time.time()
 print(", returns ", fasterIsPrime(bigPrime), end=" ")
 time1 = time.time()
 print(", time = ",(time1-time0)*1000,"ms")
+
+# 6. nthPrime
+def isPrime(n):
+    if (n < 2):
+        return False
+    if (n == 2):
+        return True
+    if (n % 2 == 0):
+        return False
+    maxFactor = round(n**0.5)
+    for factor in range(3,maxFactor+1,2):
+        if (n % factor == 0):
+            return False
+    return True
+
+# Adapt the "nth" pattern we used above in nthMultipleOf4or7()
+
+def nthPrime(n):
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if (isPrime(guess)):
+            found += 1
+    return guess
+
+# and let's see a list of the primes
+for n in range(10):
+    print(n, nthPrime(n))
+print("Done!")
