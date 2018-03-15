@@ -28,6 +28,20 @@ def countDigitOccurrence(n, d):
             count += 1
         n //= 10
     return count
+    
+def IsPowerfulNumber(n):
+    if (n < 1):
+        return False
+    if (n == 1):
+        return True
+    maxFactor = roundHalfUp(n**0.5)
+    for factor in range(1, maxFactor+1):
+        if n % (factor**3) != 0:
+            continue
+        a = n // (factor**3)
+        if roundHalfUp(a**0.5) ** 2 == a:
+            return True
+    return False
 
 #################################################
 # Tue Lecture
@@ -50,7 +64,13 @@ def mostFrequentDigit(n):
     return max_digit
 
 def nthPowerfulNumber(n):
-    return 42
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if (IsPowerfulNumber(guess)):
+            found += 1
+    return guess
 
 #################################################
 # Wed Recitation
