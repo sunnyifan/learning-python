@@ -43,13 +43,13 @@ def IsPowerfulNumber(n):
             return True
     return False
 
+   
 #################################################
 # Tue Lecture
 #################################################
 
 def mostFrequentDigit(n):
-    if n < 0:
-        n = -n
+    n = abs(n)
     # initialization
     d = 0
     max_count = 0
@@ -77,7 +77,27 @@ def nthPowerfulNumber(n):
 #################################################
 
 def longestDigitRun(n):
-    return 42
+    n = abs(n)                  # better than if...then n = -n
+        
+    consecutive_count = 0       # when setting variable names, concise+readable
+    max_consecutive_count = 0
+    digit_to_right = n % 10
+    longest_digit = n % 10
+    
+    while n >= 1:
+        if n % 10 == digit_to_right:
+            consecutive_count += 1
+            if consecutive_count > max_consecutive_count:
+                max_consecutive_count = consecutive_count
+                longest_digit = digit_to_right
+            if max_consecutive_count == consecutive_count:
+                max_consecutive_count = consecutive_count
+                longest_digit = min(digit_to_right, longest_digit)
+        else:
+            consecutive_count = 1
+        digit_to_right = n % 10
+        n //= 10
+    return longest_digit
 
 def longestIncreasingRun(n):
     return 42
