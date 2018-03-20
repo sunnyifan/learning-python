@@ -133,7 +133,7 @@ def longestIncreasingRun(n):
 
 '''
 
-def longestIncreasingRun(n):
+def longestIncreasingRunAttmp(n):
     n = abs(n)
     
     copy_n = n      # represents the original n, used to print out current_run
@@ -146,21 +146,47 @@ def longestIncreasingRun(n):
  
     if n < 10:  # trivial case to eliminate numbers with only 1 digit
         return n
-    else:
-        n //= 10        # since unit digit is already set to be initial dtr
-        while n >= 1:   # it can be dropped before the loop
-            if n % 10 < digit_to_right:
-                run_length += 1
-                current_run = copy_n % (10**run_length)
-                if current_run > longest_run:
-                    longest_run = current_run
-            else:
-                copy_n = (copy_n - current_run) // (10**run_length)
-                run_length = 1
-            digit_to_right = n % 10
-            n //= 10    
-        return longest_run
-    
+
+    n //= 10        # since unit digit is already set to be initial dtr
+    while n >= 1:   # it can be dropped before the loop
+        if n % 10 < digit_to_right:
+            run_length += 1
+            current_run = copy_n % (10**run_length)
+            if current_run > longest_run:
+                longest_run = current_run
+        else:
+            copy_n //= (10**run_length)
+            run_length = 1
+        digit_to_right = n % 10
+        n //= 10    
+    return longest_run
+
+def longestIncreasingRun(n):    # simplier, w/o copy_n
+    n = abs(n)
+ 
+    if n < 10:  # trivial case to eliminate numbers with only 1 digit
+        return n
+
+    run_length = 1  # counting digits in the increasing run
+    current_run = n % 10
+    longest_run = n % 10
+    digit_to_right = n % 10
+
+    n //= 10        # since unit digit is already set to be initial dtr it can be dropped before the loop
+
+    while n >= 1:
+        if n % 10 < digit_to_right:
+            current_run += (n % 10) * (10**run_length)  # key change
+            run_length += 1
+            if current_run > longest_run:
+                longest_run = current_run
+        else:
+            run_length = 1
+            current_run = n % 10
+        digit_to_right = n % 10
+        n //= 10    
+    return longest_run
+
    
 def nthPalindromicPrime(n):
     return 42
