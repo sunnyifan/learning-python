@@ -43,14 +43,6 @@ def IsPowerfulNumber(n):
             return True
     return False
 
-'''
-def printIncreasingRun(n, c):
-    sum = 0
-    for factor in range((n - c + 1), n):
-        sum += factor * (10**(n - factor))
-    return sum
-'''
-
 #################################################
 # Tue Lecture
 #################################################
@@ -107,52 +99,68 @@ def longestDigitRun(n):
         n //= 10
     return longest_digit
 
-'''def longestIncreasingRun(n):
-    n = abs(n)                 
-        
-    increasing_count = 1       
-    max_increasing_count = 1
+''' # draft showing way to debug #
+def longestIncreasingRun(n):
+    n = abs(n)
+    if n < 10:  # trivial case
+        return n
+
+#     print("DEBUG: n = ", n)
+    length = 0
+    original_n = n
     digit_to_right = n % 10
-    last_digit_in_run = n % 10
-    position_of_last_digit = 1
-    
-    while n >= 1:
-        if n % 10 < digit_to_right:
-            increasing_count += 1
-            if increasing_count > max_increasing_count:
-                max_increasing_count = increasing_count
-                last_digit_in_run = digit_to_right
-            if increasing_count == max_increasing_count:
-                max_increasing_count = increasing_count
-                last_digit_in_run = max(digit_to_right, last_digit_in_run)
+    increasing_run = n % 10
+    max_increasing_run = n % 10
+#    print("DEBUG: digit_to_right = ", digit_to_right)
+#    print("DEBUG: increasing_run = ", increasing_run)
+#    print("DEBUG: max_increasing_run = ", max_increasing_run)
+
+    while n >= 10:
+#        print("DEBUG: current n = ", n)
+#        print("DEBUG: Current digit_to_right", digit_to_right)
+        if n % 10 > digit_to_right:
+            increasing_run = original_n % (10**length)
+            if increasing_run > max_increasing_run:
+                max_increasing_run = increasing_run
+            original_n = (n - increasing_run) / (10**length)
+            digit_to_right = n % 10
+            length = 1
         else:
-            increasing_count = 1
-        digit_to_right = n % 10
-        n //= 10
-    return printIncreasingRun(last_digit_in_run, max_increasing_count)
+            length += 1
+            digit_to_right = n % 10
+            n //= 10
+    return max_increasing_run
+
 '''
 
 def longestIncreasingRun(n):
     n = abs(n)
     
-    length = 0
-    digit_to_right = n % 10
-    increasing_run = n % 10
-    max_increasing_run = n % 10
-    
-    while n >= 1:
-        if n % 10 > digit_to_right:
-            increasing_run = n % (10**length)
-            if increasing_run > max_increasing_run:
-                max_increasing_run = increasing_run
-            n = (n - increasing_run) / (10**length)
-            length = 0
-        else:
-            length += 1
+    copy_n = n      # represents the original n, used to print out current_run
+    run_length = 1  # counting digits in the increasing run
+    current_run = 0 # represents increasing runs being counted
+    longest_run = 0 # reprensents the longest run out of all
+    digit_to_right = n % 10  # initialzed as the unit digit of n ('rightest')
+                             # represents the digit to the right of the number
+                             # being verified
+ 
+    if n < 10:  # trivial case to eliminate numbers with only 1 digit
+        return n
+    else:
+        n //= 10        # since unit digit is already set to be initial dtr
+        while n >= 1:   # it can be dropped before the loop
+            if n % 10 < digit_to_right:
+                run_length += 1
+                current_run = copy_n % (10**run_length)
+                if current_run > longest_run:
+                    longest_run = current_run
+            else:
+                copy_n = (copy_n - current_run) // (10**run_length)
+                run_length = 1
             digit_to_right = n % 10
-        n //= 10
-    return max_increasing_run
-            
+            n //= 10    
+        return longest_run
+    
    
 def nthPalindromicPrime(n):
     return 42
