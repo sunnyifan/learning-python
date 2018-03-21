@@ -29,7 +29,7 @@ def countDigitOccurrence(n, d):
         n //= 10
     return count
     
-def IsPowerfulNumber(n):
+def isPowerfulNumber(n):
     if (n < 1):
         return False
     if (n == 1):
@@ -42,6 +42,41 @@ def IsPowerfulNumber(n):
         if roundHalfUp(a**0.5) ** 2 == a:
             return True
     return False
+
+''' 
+def digitsCount(n):
+    n = abs(n)
+    count = 0
+    while n >= 1:
+        count += 1
+        n //= 10
+    return count
+'''
+
+def reverseNumber(n):
+    n = abs(n)
+    reverse = 0
+    while (n > 0):
+        digit = n % 10
+        reverse = reverse * 10 + digit
+        n //= 10
+    return reverse
+
+def isPalindromic(n):
+    return n == reverseNumber(n)
+
+def isPrime(n):
+    if (n < 2):
+        return False
+    if (n == 2):
+        return True
+    if (n % 2 == 0):
+        return False
+    maxFactor = round(n**0.5)
+    for factor in range(3,maxFactor+1,2):
+        if (n % factor == 0):
+            return False
+    return True
 
 #################################################
 # Tue Lecture
@@ -67,7 +102,7 @@ def nthPowerfulNumber(n):
     guess = 0
     while (found <= n):
         guess += 1
-        if (IsPowerfulNumber(guess)):
+        if (isPowerfulNumber(guess)):
             found += 1
     return guess
     
@@ -189,7 +224,13 @@ def longestIncreasingRun(n):    # simplier, w/o copy_n
 
    
 def nthPalindromicPrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if isPalindromic(guess) and isPrime(guess):
+            found += 1
+    return guess
 
 def nthLeftTruncatablePrime(n):
     return 42
