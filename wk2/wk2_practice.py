@@ -78,6 +78,20 @@ def isPrime(n):
             return False
     return True
 
+def isLeftTruncatablePrime(n):
+    digit = 0
+    decimal = 0
+    component = 0
+    while n > 0:
+        digit = n % 10
+        component += digit * (10**decimal)
+        if isPrime(component):
+            decimal += 1
+            n //= 10
+        else:
+            return False
+    return True
+
 #################################################
 # Tue Lecture
 #################################################
@@ -233,7 +247,13 @@ def nthPalindromicPrime(n):
     return guess
 
 def nthLeftTruncatablePrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if isLeftTruncatablePrime(guess):
+            found += 1
+    return guess
 
 def nthCarolPrime(n):
     return 42
