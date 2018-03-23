@@ -119,7 +119,6 @@ def nthPowerfulNumber(n):
         if (isPowerfulNumber(guess)):
             found += 1
     return guess
-    
 
 #################################################
 # Wed Recitation
@@ -256,7 +255,16 @@ def nthLeftTruncatablePrime(n):
     return guess
 
 def nthCarolPrime(n):
-    return 42
+    factor = 0
+    found = 0
+    guess = 0
+    while (found <= n):
+        factor += 1
+        guess = (2**factor - 1)**2 - 2
+        if isPrime(guess):
+            found += 1
+    return guess
+
 
 #################################################
 # Extra Practice
