@@ -43,7 +43,6 @@ def isPowerfulNumber(n):
             return True
     return False
 
-''' 
 def digitsCount(n):
     n = abs(n)
     count = 0
@@ -51,7 +50,6 @@ def digitsCount(n):
         count += 1
         n //= 10
     return count
-'''
 
 def reverseNumber(n):
     n = abs(n)
@@ -90,6 +88,18 @@ def isLeftTruncatablePrime(n):
             n //= 10
         else:
             return False
+    return True
+
+def isCircularPrime(n):
+    digits = digitsCount(n)
+    round = 0
+    rotation = n
+    while (round < digits):
+        if isPrime(rotation):
+            round += 1
+        else:
+            return False
+        rotation = (rotation % (10 ** (digits - 1))) * 10 + rotation // (10 ** (digits - 1))
     return True
 
 #################################################
@@ -270,26 +280,45 @@ def nthCarolPrime(n):
 # Extra Practice
 #################################################
 
-def pi(n):
-    return 42
-
-def h(n):
-    return 42
-
-def estimatedPi(n):
-    return 42
-
-def estimatedPiError(n):
-    return 42
-
 def hasOnlyOddDigits(n):
-    return 42
+    n = abs(n)
+    if n == 0:
+        return False
+    digit = 0
+    while n > 0:
+        digit = n % 10
+        if digit % 2 == 0:
+            return False
+        else:
+            n //= 10
+    return True
 
 def isRotation(x, y):
-    return 42
+    if x == y:
+        return True
+
+    x_digits = digitsCount(x)
+    y_digits = digitsCount(y)
+    if x_digits != y_digits:
+        return False
+
+    round = 0
+    rotation = x
+    while (round < x_digits):
+        rotation = (rotation % (10**(x_digits - 1))) * 10 + rotation // (10**(x_digits - 1))
+        if rotation == y:
+            return True
+        round += 1
+    return False
 
 def nthCircularPrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if isCircularPrime(guess):
+            found += 1
+    return guess
 
 #################################################
 # Test Functions
@@ -365,7 +394,7 @@ def testCarolPrime():
     assertAlmostEqual(nthCarolPrime(3), 3967)
     assertAlmostEqual(nthCarolPrime(6), 16769023)
     print('Passed.')
-
+'''
 def testPi():
     print('Testing pi()... ', end='')
     assertEqual(pi(1), 0)
@@ -397,6 +426,7 @@ def testEstimatedPiError():
     assertEqual(estimatedPiError(400), 1) # pi(400) = 78, estimatedPi(400) = 79
     assertEqual(estimatedPiError(500), 1) # pi(500) = 95, estimatedPi(500) = 94
     print('Passed.')
+'''
 
 def testHasOnlyOddDigits():
     print('Testing hasOnlyOddDigits()... ', end='')
@@ -447,10 +477,6 @@ def main():
         testNthPalindromicPrime,
         testNthLeftTruncatablePrime,
         testCarolPrime,
-        testPi,
-        testH,
-        testEstimatedPi,
-        testEstimatedPiError,
         testHasOnlyOddDigits,
         testIsRotation,
         testNthCircularPrime,
