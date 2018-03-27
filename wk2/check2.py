@@ -36,7 +36,17 @@ def digitCount(n):
     return count
 
 def hasConsecutiveDigits(n):
-    return 42
+    n = abs(n)
+    if 0 <= n < 10:
+        return False
+    digit = n % 10
+    n //= 10
+    while n > 0:
+        if n % 10 == digit:
+            return True
+        digit = n % 10
+        n //= 10
+    return False
 
 def gcd(x, y):
     return 42
