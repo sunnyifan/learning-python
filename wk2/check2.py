@@ -11,7 +11,7 @@ import math
 
 def almostEqual(d1, d2, epsilon=10**-7):
     # note: use math.isclose() outside 15-112 with Python version 3.5 or later
-    return (abs(d2 - d1) < epsilon)
+    return abs(d2 - d1) < epsilon
 
 import decimal
 def roundHalfUp(d):
@@ -22,17 +22,37 @@ def roundHalfUp(d):
     return int(decimal.Decimal(d).to_integral_value(rounding=rounding))
 
 def isPrime(n):
-    if (n < 2):
+    if n < 2:
         return False
-    if (n == 2):
+    if n == 2:
         return True
-    if (n % 2 == 0):
+    if n % 2 == 0:
         return False
     maxFactor = roundHalfUp(n**0.5)
     for factor in range(3,maxFactor+1,2):
-        if (n % factor == 0):
+        if n % factor == 0:
             return False
     return True
+
+def isAdditivePrime(n):
+    if not isPrime(n):
+        return False
+    total = 0
+    while n > 0:
+        digit = n % 10
+        total += digit
+        n //= 10
+    return isPrime(total)
+
+def isPerfectNumber(n):
+    if n < 6:
+        return False
+    maxFactor = roundHalfUp(n * 0.5)
+    sum = 1     # because 1 is common divider for all int
+    for factor in range(2, maxFactor+1):
+        if n % factor == 0:
+            sum += factor
+    return sum == n
 
 #################################################
 # Problems
@@ -78,10 +98,22 @@ def nthPrime(n):
     return guess
 
 def nthAdditivePrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while found <= n:
+        guess += 1
+        if isAdditivePrime(guess):
+            found += 1
+    return guess
 
 def nthPerfectNumber(n):
-    return 42
+    found = 0
+    guess = 0
+    while found <= n:
+        guess += 1
+        if isPerfectNumber(guess):
+            found += 1
+    return guess
 
 #################################################
 # Test Functions
