@@ -21,6 +21,19 @@ def roundHalfUp(d):
     # https://docs.python.org/3/library/decimal.html#rounding-modes
     return int(decimal.Decimal(d).to_integral_value(rounding=rounding))
 
+def isPrime(n):
+    if (n < 2):
+        return False
+    if (n == 2):
+        return True
+    if (n % 2 == 0):
+        return False
+    maxFactor = roundHalfUp(n**0.5)
+    for factor in range(3,maxFactor+1,2):
+        if (n % factor == 0):
+            return False
+    return True
+
 #################################################
 # Problems
 #################################################
@@ -49,10 +62,20 @@ def hasConsecutiveDigits(n):
     return False
 
 def gcd(x, y):
-    return 42
+    while y > 0:
+        old_x = x
+        x = y
+        y = old_x % y
+    return x
 
 def nthPrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while found <= n:
+        guess += 1
+        if isPrime(guess):
+            found += 1
+    return guess
 
 def nthAdditivePrime(n):
     return 42
