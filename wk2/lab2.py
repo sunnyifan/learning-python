@@ -59,7 +59,7 @@ def isKaprekarNumber(n):
     right_part = 0
     while square > 0:
         right_part += (square % 10) * (10**round)
-        left_part = (square - right_part) // (10**(round + 1))
+        left_part = (n**2 - right_part) // (10**(round + 1))
         total = right_part + left_part
         if right_part != 0 and total == n:
             return True
