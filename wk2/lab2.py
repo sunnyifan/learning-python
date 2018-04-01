@@ -67,6 +67,16 @@ def isKaprekarNumber(n):
         square //= 10
     return False
 
+def digitCount(n):
+    n = abs(n)
+    if n == 0:
+        return 1
+    count = 0
+    while n > 0:
+        count += 1
+        n //= 10
+    return count
+
 #################################################
 # Problems
 #################################################
@@ -84,7 +94,17 @@ def findZeroWithBisection(f, x0, x1, epsilon):
     return 42
 
 def carrylessAdd(x1, x2):
-    return 42
+    min_count = min(digitCount(x1), digitCount(x2))
+    max_x = max(x1, x2)
+    carryless_sum = 0
+    round = 0
+    while round < min_count:
+        digit_sum = (x1 % 10 + x2 % 10) % 10
+        carryless_sum += digit_sum * (10**round)
+        x1 //= 10
+        x2 //= 10
+        round += 1
+    return (max_x - (max_x % (10**round)) + carryless_sum)
 
 def nthKaprekarNumber(n):
     found = 0
@@ -127,6 +147,7 @@ def testFindZerosWithBisection():
 def testCarrylessAdd():
     print('Testing carrylessAdd()...', end='')
     assertEqual(carrylessAdd(785, 376), 51)
+    assertEqual(carrylessAdd(785, 76), 751)
     assertEqual(carrylessAdd(12345678900, 38984034003), 40229602903)
     print('Passed.')
 
