@@ -51,6 +51,22 @@ def isEmirpsPrime(n):
     if isPrime(n):
         return isPrime(reverseNumber(n))
 
+def isKaprekarNumber(n):
+    if n < 1:
+        return False
+    square = n**2
+    round = 0
+    right_part = 0
+    while square > 0:
+        right_part += (square % 10) * (10**round)
+        left_part = (square - right_part) // (10**(round + 1))
+        total = right_part + left_part
+        if right_part != 0 and total == n:
+            return True
+        round += 1
+        square //= 10
+    return False
+
 #################################################
 # Problems
 #################################################
@@ -71,7 +87,13 @@ def carrylessAdd(x1, x2):
     return 42
 
 def nthKaprekarNumber(n):
-    return 42
+    found = 0
+    guess = 0
+    while found <= n:
+        guess += 1
+        if isKaprekarNumber(guess):
+            found += 1
+    return guess
 
 def integral(f, a, b, N):
     return 42
