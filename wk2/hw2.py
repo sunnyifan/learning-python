@@ -59,6 +59,29 @@ def nthKaprekarNumber(n):
             found += 1
     return guess
 
+def digitCount(n):
+    n = abs(n)
+    if n == 0:
+        return 1
+    count = 0
+    while n > 0:
+        count += 1
+        n //= 10
+    return count
+
+def carrylessAdd(x1, x2):
+    min_count = min(digitCount(x1), digitCount(x2))
+    max_x = max(x1, x2)
+    carryless_sum = 0
+    round = 0
+    while round < min_count:
+        digit_sum = (x1 % 10 + x2 % 10) % 10
+        carryless_sum += digit_sum * (10**round)
+        x1 //= 10
+        x2 //= 10
+        round += 1
+    return (max_x - (max_x % (10**round)) + carryless_sum)
+
 #################################################
 # Problems
 #################################################
@@ -128,7 +151,18 @@ def nearestKaprekarNumber(n):
     return nthKaprekarNumber(trail - 1)
 
 def carrylessMultiply(x1, x2):
-    return 42
+    carrylessSum = 0
+    carrylessMultiply = 0
+    digitUnit = 1
+    while x1 > 0:
+        digit = x1 % 10
+        while digit > 0:
+            carrylessSum = carrylessAdd(x2, carrylessSum)
+            digit -= 1
+        carrylessMultiply = carrylessAdd((carrylessSum * digitUnit), carrylessMultiply)
+        x1 //= 10
+        digitUnit *= 10
+    return carrylessMultiply
 
 def nthSmithNumber(n):
     return 42
