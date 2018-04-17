@@ -82,6 +82,29 @@ def carrylessAdd(x1, x2):
         round += 1
     return (max_x - (max_x % (10**round)) + carryless_sum)
 
+def sumOfDigits(n):
+    n = abs(n)
+    total = 0
+    while n > 0:
+        digit = n % 10
+        total += digit
+        n //= 10
+    return total
+
+def sumOfPrimeFactors(n):
+    total = 0
+    if n <= 1:
+        return 0
+    for factor in range(1, n):
+        if isPrime(factor) and (n % factor == 0):
+            while n > 1:
+                total += factor
+                n //= factor
+    return total
+
+def isSmithNumber(n):
+    return sumOfDigits(n) == sumOfPrimeFactors(n)
+
 #################################################
 # Problems
 #################################################
@@ -150,7 +173,7 @@ def nearestKaprekarNumber(n):
         return guess
     return nthKaprekarNumber(trail - 1)
 
-def carrylessMultiply(x1, x2):
+def carrylessMultiplyDraft(x1, x2):
     carrylessSum = 0
     carrylessMultiply = 0
     digitUnit = 1
@@ -159,13 +182,19 @@ def carrylessMultiply(x1, x2):
         while digit > 0:
             carrylessSum = carrylessAdd(x2, carrylessSum)
             digit -= 1
-        carrylessMultiply = carrylessAdd((carrylessSum * digitUnit), carrylessMultiply)
+            carrylessMultiply = carrylessAdd((carrylessSum * digitUnit), carrylessMultiply)
         x1 //= 10
         digitUnit *= 10
     return carrylessMultiply
 
 def nthSmithNumber(n):
-    return 42
+    found = 0
+    guess = 0
+    while found <= n:
+        guess += 1
+        if isSmithNumber(guess):
+            found += 1
+    return guess
 
 ###### BONUS #######
 
