@@ -196,7 +196,8 @@ def carrylessMultiply(x1, x2):
         while digit > 0:
             carrylessSum = carrylessAdd(x2, carrylessSum)
             digit -= 1
-            carrylessMultiply = carrylessAdd((carrylessSum * digitUnit), carrylessMultiply)
+        carrylessMultiply = carrylessAdd((carrylessSum * digitUnit), carrylessMultiply)
+        carrylessSum = 0
         x1 //= 10
         digitUnit *= 10
     return carrylessMultiply
