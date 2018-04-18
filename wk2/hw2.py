@@ -34,6 +34,15 @@ def isPrime(n):
             return False
     return True
 
+def nthPrime(n):
+    found = 0
+    guess = 0
+    while found <= n:
+        guess += 1
+        if isPrime(guess):
+            found += 1
+    return guess
+
 def isKaprekarNumber(n):
     if n < 1:
         return False
@@ -93,16 +102,21 @@ def sumOfDigits(n):
 
 def sumOfPrimeFactors(n):
     total = 0
+    trail = 0
     if n <= 1:
         return 0
-    for factor in range(1, n):
-        if isPrime(factor) and (n % factor == 0):
-            while n > 1:
-                total += factor
-                n //= factor
+    while n > 1:
+        if n % nthPrime(trail) == 0:
+            total += sumOfDigits(nthPrime(trail))
+            n //= nthPrime(trail)
+            trail = 0
+        else:
+            trail += 1
     return total
 
 def isSmithNumber(n):
+    if isPrime(n):
+        return False
     return sumOfDigits(n) == sumOfPrimeFactors(n)
 
 #################################################
@@ -173,7 +187,7 @@ def nearestKaprekarNumber(n):
         return guess
     return nthKaprekarNumber(trail - 1)
 
-def carrylessMultiplyDraft(x1, x2):
+def carrylessMultiply(x1, x2):
     carrylessSum = 0
     carrylessMultiply = 0
     digitUnit = 1
