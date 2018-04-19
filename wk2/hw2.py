@@ -119,6 +119,23 @@ def isSmithNumber(n):
         return False
     return sumOfDigits(n) == sumOfPrimeFactors(n)
 
+def isWeaklyPrime(n):
+    if not isPrime(n):
+        return False
+    nOrig = n
+    digitUnit = 1
+    while n > 0:
+        digit = n % 10
+        for factor in range(0, 10):
+            nAlt = nOrig + ((factor - digit) * digitUnit)
+            if nAlt != nOrig:
+                if isPrime(nAlt):
+                    return False
+        n //= 10
+        digitUnit *= 10
+    return True
+
+
 #################################################
 # Problems
 #################################################
@@ -214,7 +231,13 @@ def nthSmithNumber(n):
 ###### BONUS #######
 
 def nthWeaklyPrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while found <= n:
+        guess += 1
+        if isWeaklyPrime(guess):
+            found += 1
+    return guess
 
 def play112(game):
     return 42
@@ -322,9 +345,9 @@ def testNthSmithNumber():
 
 def testNthWeaklyPrime():
     print("Testing carrylessMultiply()...", end="")
-    #assertEqual(nthWeaklyPrime(0), 294001)
+    assertEqual(nthWeaklyPrime(0), 294001)
     assertEqual(nthWeaklyPrime(1), 505447)
-    #assertEqual(nthWeaklyPrime(2), 584141)
+    assertEqual(nthWeaklyPrime(2), 584141)
     print("Passed!")
 
 def testPlay112():
@@ -358,7 +381,7 @@ def main():
         testCarrylessMultiply,
         testNthSmithNumber,
         # bonus: (uncomment these to test them....)
-        # testNthWeaklyPrime,
+        testNthWeaklyPrime,
         # testPlay112,
     )
 

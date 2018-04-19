@@ -4,7 +4,7 @@ _module = 'cs112_f16_wk2.py version 1.2'
 # are not expected to look at nor to understand any code in this file.
 # (At least not in week2!)
 
-_ON_AUTOGRADER_SERVER_ = True
+_ON_AUTOGRADER_SERVER_ = False
 
 _bannedTokens = [
         #'False', 'None', 'True', 'and',
