@@ -134,7 +134,73 @@ def isWeaklyPrime(n):
         n //= 10
         digitUnit *= 10
     return True
+#################################################
+# Helper Functions for play112
+#################################################
 
+def makeBoard(moves):
+    board = 8
+    while moves > 1:
+        board = board * 10 + 8
+        moves -= 1
+    return board
+
+def kthDigit(n,k):
+    n = abs(n)
+    if k > digitCount(n):
+        return 0
+    while k >= 0:
+        digit = n % 10
+        n //= 10
+        k -= 1
+    return digit
+
+def replaceKthDigit(n,k,d):
+    nOrig = n
+    n = abs(n)
+    digit = kthDigit(n,k)
+    nAlt = nOrig + (d - digit) * (10**k)
+    if nOrig < 0:
+        return -nAlt
+    return nAlt
+
+def getLeftmostDigit(n):
+    count = digitCount(n)
+    k = count - 1
+    return kthDigit(n,k)
+
+def clearLeftmostDigit(n):
+    count = digitCount(n)
+    digit = getLeftmostDigit(n)
+    result = n - digit * (10**(count-1))
+    return result
+
+def makeMove(board, position, move):
+    if position < 1 or position > digitCount(board):
+        return "offboard!"
+    if move != 1 and move != 2:
+        return "move must be 1 or 2!"
+    k = digitCount(board) - position
+    if kthDigit(board, k) != 8:
+        return "occupied!"
+    return replaceKthDigit(board, k, move)
+
+def isWin(board):
+    while board > 100:
+        count = digitCount(board)
+        trio = board // (10**(count-3))
+        if trio == 112:
+            return True
+        board = clearLeftmostDigit(board)
+    return False
+
+def isFull(board):
+    while board > 0:
+        digit = board % 10
+        if digit == 8:
+            return False
+        board //= 10
+    return True
 
 #################################################
 # Problems
@@ -367,22 +433,104 @@ def testPlay112():
     assertEqual(play112( 51122324152 ), "12212: Tie!")
     print("Passed!")
 
+def testMakeBoard():
+    print("Testing makeBoard()...", end="")
+    assert (makeBoard(1) == 8)
+    assert (makeBoard(2) == 88)
+    assert (makeBoard(3) == 888)
+    print("Passed!")
+
+def testKthDigit():
+    print("Testing kthDigit()...", end="")
+    assert(kthDigit(789, 0) == kthDigit(-789, 0) == 9)
+    assert(kthDigit(789, 1) == kthDigit(-789, 1) == 8)
+    assert(kthDigit(789, 2) == kthDigit(-789, 2) == 7)
+    assert(kthDigit(789, 3) == kthDigit(-789, 3) == 0)
+    assert(kthDigit(789, 4) == kthDigit(-789, 4) == 0)
+    print("Passed!")
+
+def testReplaceKthDigit():
+    print("Testing replaceKthDigit()...", end="")
+    assert (replaceKthDigit(789, 0, 6) == 786)
+    assert (replaceKthDigit(789, 1, 6) == 769)
+    assert (replaceKthDigit(789, 2, 6) == 689)
+    assert (replaceKthDigit(789, 3, 6) == 6789)
+    assert (replaceKthDigit(789, 4, 6) == 60789)
+    print("Passed!")
+
+def testGetLeftmostDigit():
+    print("Testing replaceKthDigit()...", end="")
+    assert (getLeftmostDigit(7089) == 7)
+    assert (getLeftmostDigit(89) == 8)
+    assert (getLeftmostDigit(9) == 9)
+    assert (getLeftmostDigit(0) == 0)
+    print("Passed!")
+
+def testClearLeftmostDigit():
+    print("Testing replaceKthDigit()...", end="")
+    assert (clearLeftmostDigit(789) == 89)
+    assert (clearLeftmostDigit(89) == 9)
+    assert (clearLeftmostDigit(9) == 0)
+    assert (clearLeftmostDigit(0) == 0)
+    assert (clearLeftmostDigit(60789) == 789)
+    print("Passed!")
+
+def testMakeMove():
+    print("Testing replaceKthDigit()...", end="")
+    assert (makeMove(8, 1, 1) == 1)
+    assert (makeMove(888888, 1, 1) == 188888)
+    assert (makeMove(888888, 2, 1) == 818888)
+    assert (makeMove(888888, 5, 2) == 888828)
+    assert (makeMove(888888, 6, 2) == 888882)
+    assert (makeMove(888888, 6, 3) == "move must be 1 or 2!")
+    assert (makeMove(888888, 7, 1) == "offboard!")
+    assert (makeMove(888881, 6, 1) == "occupied!")
+    print("Passed!")
+
+def testIsWin():
+    print("Testing replaceKthDigit()...", end="")
+    assert (isWin(888888) == False)
+    assert (isWin(112888) == True)
+    assert (isWin(811288) == True)
+    assert (isWin(888112) == True)
+    assert (isWin(211222) == True)
+    assert (isWin(212212) == False)
+    print("Passed!")
+
+def testIsFull():
+    print("Testing replaceKthDigit()...", end="")
+    assert (isFull(888888) == False)
+    assert (isFull(121888) == False)
+    assert (isFull(812188) == False)
+    assert (isFull(888121) == False)
+    assert (isFull(212122) == True)
+    assert (isFull(212212) == True)
+    print("Passed!")
+
 #################################################
 # Main
 #################################################
 
 def main():
     testAll(
-        testSumOfSquaresOfDigits,
-        testIsHappyNumber,
-        testNthHappyNumber,
-        testNthHappyPrime,
-        testNearestKaprekarNumber,
-        testCarrylessMultiply,
-        testNthSmithNumber,
+        #testSumOfSquaresOfDigits,
+        #testIsHappyNumber,
+        #testNthHappyNumber,
+        #testNthHappyPrime,
+        #testNearestKaprekarNumber,
+        #testCarrylessMultiply,
+        #testNthSmithNumber,
         # bonus: (uncomment these to test them....)
-        testNthWeaklyPrime,
+        #testNthWeaklyPrime,
         # testPlay112,
+        testMakeBoard,
+        testKthDigit,
+        testReplaceKthDigit,
+        testGetLeftmostDigit,
+        testClearLeftmostDigit,
+        testMakeMove,
+        testIsWin,
+        testIsFull,
     )
 
 if __name__ == '__main__':
