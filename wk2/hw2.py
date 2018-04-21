@@ -134,6 +134,7 @@ def isWeaklyPrime(n):
         n //= 10
         digitUnit *= 10
     return True
+
 #################################################
 # Helper Functions for play112
 #################################################
@@ -201,6 +202,13 @@ def isFull(board):
             return False
         board //= 10
     return True
+
+def whoseTurn(game):
+    allTurns = digitCount(game) - 1
+    if allTurns % 4 == 0:
+        return "Player 2"
+    else:
+        return "Player 1"
 
 #################################################
 # Problems
@@ -306,7 +314,29 @@ def nthWeaklyPrime(n):
     return guess
 
 def play112(game):
-    return 42
+    # initiate board settings
+    gameOrig = game
+    board = makeBoard(getLeftmostDigit(game))
+    # generate final board condition
+    game = clearLeftmostDigit(game)
+    while game > 0:
+        position = getLeftmostDigit(game)
+        game = clearLeftmostDigit(game)
+        move = getLeftmostDigit(game)
+        if isinstance(makeMove(board, position, move), int):
+            board = makeMove(board, position, move)
+            game = clearLeftmostDigit(game)
+        else:
+            return str(board) + ": " + str(whoseTurn(gameOrig)) + ": " + str(makeMove(board, position, move))
+    result = str(board) + ": "
+    # decide result of the game
+    if isWin(board):
+        result += str(whoseTurn(gameOrig)) + " wins!"
+    elif isFull(board):
+        result += "Tie!"
+    else:
+        result += "Unfinished!"
+    return result
 
 #################################################
 # Test Functions
@@ -522,7 +552,6 @@ def main():
         #testNthSmithNumber,
         # bonus: (uncomment these to test them....)
         #testNthWeaklyPrime,
-        # testPlay112,
         testMakeBoard,
         testKthDigit,
         testReplaceKthDigit,
@@ -531,6 +560,7 @@ def main():
         testMakeMove,
         testIsWin,
         testIsFull,
+        testPlay112,
     )
 
 if __name__ == '__main__':
