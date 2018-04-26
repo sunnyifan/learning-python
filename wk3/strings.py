@@ -134,5 +134,77 @@ def reverseString(s):
 
 print(reverseString(s))
 
+# 4. Lopping over Strings
+# 4.1 "for" loop with indexes
+s = "abcd"
+for i in range(len(s)):
+    print(i, s[i])
+
+# 4.2 "for" loop without indexes
+s = "abcd"
+for c in s:
+    print(c)
+
+# 4.3 "for" loop with split
+names = "fred,wilma,betty,barney"
+for name in names.split(","):
+    print(name)
+
+# 4.4 "for" loop with splitlines
+# quotes from brainyquote.com
+quotes = """\
+Dijkstra: Simplicity is prerequisite for reliability.
+Knuth: If you optimize everything, you will always be unhappy.
+Dijkstra: Perfecting oneself is as much unlearning as it is learning.
+Knuth: Beware of bugs in the above code; I have only proved it correct, not tried it.
+Dijkstra: Computer science is no more about computers than astronomy is about telescopes.
+"""
+for line in quotes.splitlines():
+    if (line.startswith("Knuth")):
+        print(line)
+
+# 5. Example: isPalindrome
+# There are many ways to write isPalindrome(s)
+# Here are several.  Which way is best?
+
+def reverseString(s):
+    return s[::-1]
+
+def isPalindrome1(s):
+    return (s == reverseString(s))
+
+def isPalindrome2(s):
+    for i in range(len(s)):
+        if (s[i] != s[len(s)-1-i]):
+            return False
+    return True
+
+def isPalindrome3(s):
+    for i in range(len(s)):
+        if (s[i] != s[-1-i]):
+            return False
+    return True
+
+def isPalindrome4(s):
+    while (len(s) > 1):
+        if (s[0] != s[-1]):
+            return False
+        s = s[1:-1]
+    return True
+
+print(isPalindrome1("abcba"), isPalindrome1("abca"))
+print(isPalindrome2("abcba"), isPalindrome2("abca"))
+print(isPalindrome3("abcba"), isPalindrome3("abca"))
+print(isPalindrome4("abcba"), isPalindrome4("abca"))
+
+# 6. Strings are Immutable
+# 6.1 You cannot change strings! They are immutable.
+s = "abcde"
+s[2] = "z"  # Error! Cannot assign into s[i]
+
+# 6.2 Instead, you must create a new string
+s = "abcde"
+s = s[:2] + "z" + s[3:]
+print(s)
 
 
