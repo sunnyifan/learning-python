@@ -207,4 +207,125 @@ s = "abcde"
 s = s[:2] + "z" + s[3:]
 print(s)
 
+# 7. Some String-related Built-In Functions
+# 7.1 input(), str(), and len()
+name = input("Enter your name: ")
+print("Hi, " + name + ". Your name has " + str(len(name)) + " letters!")
 
+# 7.2 chr() and ord()
+print(ord("A")) # 65
+print(chr(65))  # "A"
+print(chr(ord("A")+1)) # ?
+
+# 7.3 eval()
+# eval() works but you should not use it!
+s = "(3**2 + 4**2)**0.5"
+print(eval(s))
+
+# why not? Well...
+s = "reformatMyHardDrive()"
+print(eval(s)) # no such function!  But what if there was?
+
+# 8. Some String Methods
+# 8.1 Character types: isalnum(), isalpha(), isdigit(), islower(), isspace(), isupper()
+# Run this code to see a table of isX() behaviors
+def p(test):
+    print("True     " if test else "False    ", end="")
+def printRow(s):
+    print(" " + s + "  ", end="")
+    p(s.isalnum())
+    p(s.isalpha())
+    p(s.isdigit())
+    p(s.islower())
+    p(s.isspace())
+    p(s.isupper())
+    print()
+def printTable():
+    print("  s   isalnum  isalpha  isdigit  islower  isspace  isupper")
+    for s in "ABCD,ABcd,abcd,ab12,1234,    ,AB?!".split(","):
+        printRow(s)
+printTable()
+
+# 8.2 String edits: lower(), upper(), replace(), strip()
+print("This is nice. Yes!".lower())
+print("So is this? Sure!!".upper())
+print("   Strip removes leading and trailing whitespace only    ".strip())
+print("This is nice.  Really nice.".replace("nice", "sweet"))
+print("This is nice.  Really nice.".replace("nice", "sweet", 1)) # count = 1
+
+print("----------------")
+s = "This is so so fun!"
+t = s.replace("so ", "")
+print(t)
+print(s) # note that s is unmodified (strings are immutable!)
+
+# 8.3 Substring search: count(), startswith(), endswith(), find(), index()
+print("This is a history test".count("is")) # 3
+print("This IS a history test".count("is")) # 2
+print("-------")
+print("Dogs and cats!".startswith("Do"))    # True
+print("Dogs and cats!".startswith("Don't")) # False
+print("-------")
+print("Dogs and cats!".endswith("!"))       # True
+print("Dogs and cats!".endswith("rats!"))   # False
+print("-------")
+print("Dogs and cats!".find("and"))         # 5
+print("Dogs and cats!".find("or"))          # -1
+print("-------")
+print("Dogs and cats!".index("and"))        # 5
+print("Dogs and cats!".index("or"))         # crash!
+
+# 9. String Formatting
+# 9.1 format a string with %s
+breed = "beagle"
+print("Did you see a %s?" % breed)
+
+# format an integer with %d
+dogs = 42
+print("There are %d dogs." % dogs)
+
+# format a float with %f
+grade = 87.385
+print("Your current grade is %f!" % grade)
+
+# format a float with %.[precision]f
+grade = 87.385
+print("Your current grade is %0.1f!" % grade)
+
+# format multiple values
+dogs = 42
+cats = 18
+exclamation = "Wow"
+print("There are %d dogs and %d cats. %s!!!" % (dogs, cats, exclamation))
+
+# format right-aligned with %[minWidth]
+dogs = 42
+cats = 3
+print("%10s %10s" % ("dogs", "cats"))
+print("%10d %10d" % (dogs, cats))
+
+# format left-aligned with %-[minWidth]
+dogs = 42
+cats = 3
+print("%-10s %-10s" % ("dogs", "cats"))
+print("%-10d %-10d" % (dogs, cats))
+
+# 10. Basic File IO
+# Note: As this requires read-write access to your hard drive,
+#       this will not run in the browser in Brython.
+
+def readFile(path):
+    with open(path, "rt") as f:
+        return f.read()
+
+def writeFile(path, contents):
+    with open(path, "wt") as f:
+        f.write(contents)
+
+contentsToWrite = "This is a test!\nIt is only a test!"
+writeFile("foo.txt", contentsToWrite)
+
+contentsRead = readFile("foo.txt")
+assert(contentsRead == contentsToWrite)
+
+print("Open the file foo.txt and verify its contents.")
