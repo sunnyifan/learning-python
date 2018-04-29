@@ -139,16 +139,31 @@ print(reverseString(s))
 s = "abcd"
 for i in range(len(s)):
     print(i, s[i])
+# result:
+# 0 a
+# 1 b
+# 2 c
+# 3 d
 
 # 4.2 "for" loop without indexes
 s = "abcd"
 for c in s:
     print(c)
+# result:
+# a
+# b
+# c
+# d
 
 # 4.3 "for" loop with split
 names = "fred,wilma,betty,barney"
 for name in names.split(","):
     print(name)
+# result:
+# fred
+# wilma
+# betty
+# barney
 
 # 4.4 "for" loop with splitlines
 # quotes from brainyquote.com
@@ -174,7 +189,7 @@ def isPalindrome1(s):
     return (s == reverseString(s))
 
 def isPalindrome2(s):
-    for i in range(len(s)):
+    for i in range(len(s)):         # 0 -> (len(s) - 1)
         if (s[i] != s[len(s)-1-i]):
             return False
     return True
@@ -189,7 +204,7 @@ def isPalindrome4(s):
     while (len(s) > 1):
         if (s[0] != s[-1]):
             return False
-        s = s[1:-1]
+        s = s[1:-1]     # cuts both side by 1 char
     return True
 
 print(isPalindrome1("abcba"), isPalindrome1("abca"))
@@ -200,7 +215,7 @@ print(isPalindrome4("abcba"), isPalindrome4("abca"))
 # 6. Strings are Immutable
 # 6.1 You cannot change strings! They are immutable.
 s = "abcde"
-s[2] = "z"  # Error! Cannot assign into s[i]
+# s[2] = "z"  # Error! Cannot assign into s[i]
 
 # 6.2 Instead, you must create a new string
 s = "abcde"
@@ -210,13 +225,13 @@ print(s)
 # 7. Some String-related Built-In Functions
 # 7.1 input(), str(), and len()
 name = input("Enter your name: ")
-print("Hi, " + name + ". Your name has " + str(len(name)) + " letters!")
+print("Hi, " + name + ". Your name has " + str(len(name)) + " letters!") # make sure all compo are str
 
 # 7.2 chr() and ord()
 print(ord("A")) # 65
 print(chr(65))  # "A"
 print(chr(ord("A")+1)) # ?
-
+'''''
 # 7.3 eval()
 # eval() works but you should not use it!
 s = "(3**2 + 4**2)**0.5"
@@ -329,3 +344,4 @@ contentsRead = readFile("foo.txt")
 assert(contentsRead == contentsToWrite)
 
 print("Open the file foo.txt and verify its contents.")
+'''
