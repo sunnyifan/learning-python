@@ -231,15 +231,15 @@ print("Hi, " + name + ". Your name has " + str(len(name)) + " letters!") # make 
 print(ord("A")) # 65
 print(chr(65))  # "A"
 print(chr(ord("A")+1)) # ?
-'''''
+
 # 7.3 eval()
 # eval() works but you should not use it!
 s = "(3**2 + 4**2)**0.5"
-print(eval(s))
+print(eval(s))      # eval() interprets a string as code
 
 # why not? Well...
 s = "reformatMyHardDrive()"
-print(eval(s)) # no such function!  But what if there was?
+# print(eval(s)) # no such function!  But what if there was?
 
 # 8. Some String Methods
 # 8.1 Character types: isalnum(), isalpha(), isdigit(), islower(), isspace(), isupper()
@@ -248,7 +248,7 @@ def p(test):
     print("True     " if test else "False    ", end="")
 def printRow(s):
     print(" " + s + "  ", end="")
-    p(s.isalnum())
+    p(s.isalnum())      # method, not function
     p(s.isalpha())
     p(s.isdigit())
     p(s.islower())
@@ -285,33 +285,34 @@ print("Dogs and cats!".endswith("!"))       # True
 print("Dogs and cats!".endswith("rats!"))   # False
 print("-------")
 print("Dogs and cats!".find("and"))         # 5
-print("Dogs and cats!".find("or"))          # -1
+print("Dogs and cats!".find("or"))          # returns -1 when do not exist
 print("-------")
 print("Dogs and cats!".index("and"))        # 5
-print("Dogs and cats!".index("or"))         # crash!
+# print("Dogs and cats!".index("or"))         # crash!
 
 # 9. String Formatting
 # 9.1 format a string with %s
 breed = "beagle"
-print("Did you see a %s?" % breed)
+print("Did you see a %s?" % breed)  # Did you see a beagle?
 
 # format an integer with %d
 dogs = 42
-print("There are %d dogs." % dogs)
+print("There are %d dogs." % dogs)  # There are 42 dogs.
 
 # format a float with %f
 grade = 87.385
-print("Your current grade is %f!" % grade)
+print("Your current grade is %f!" % grade)  # Your current grade is 87.385000!
 
 # format a float with %.[precision]f
 grade = 87.385
-print("Your current grade is %0.1f!" % grade)
+print("Your current grade is %0.1f!" % grade)   # Your current grade is 87.4!
 
 # format multiple values
 dogs = 42
 cats = 18
 exclamation = "Wow"
 print("There are %d dogs and %d cats. %s!!!" % (dogs, cats, exclamation))
+# There are 42 dogs and 18 cats. Wow!!!
 
 # format right-aligned with %[minWidth]
 dogs = 42
@@ -344,4 +345,3 @@ contentsRead = readFile("foo.txt")
 assert(contentsRead == contentsToWrite)
 
 print("Open the file foo.txt and verify its contents.")
-'''
