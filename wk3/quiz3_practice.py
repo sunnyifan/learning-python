@@ -12,16 +12,53 @@ import string
 # Problems
 #################################################
 def vowelCount(s):
-    return 42
+    s = s.lower()
+    count = s.count('a') + s.count('e') + s.count('i') + s.count('o') + s.count('u')
+    return count
 
 def interleave(s1, s2):
-    return "Z"
+    output = ''
+    i = 0
+    minCount = min(len(s1),len(s2))
+    while i < minCount:
+        output += s1[i] + s2[i]
+        i += 1
+    if len(s1) <= len(s2):
+        output += s2[i:]
+    else:
+        output += s1[i:]
+    return output
 
 def mostFrequentLetters(s):
-    return 'Z'
+    if s == '':
+        return ''
+    s = s.upper()
+    char = string.ascii_uppercase
+    i = 0
+    maxCount = 0
+    output = ''
+    while i < 26:
+        count = s.count(char[i])
+        if maxCount < count:
+            maxCount = count
+            output = char[i]
+        elif maxCount == count:
+            output += char[i]
+        i += 1
+    return output
 
 def hasBalancedParentheses(s):
-    return False
+    i = 0
+    tracker = 0
+    while i < len(s):
+        if s[i] == '(':
+            tracker += 1
+        if s[i] == ')':
+            tracker -= 1
+        if tracker < 0:
+            return False
+        i += 1
+    return tracker == 0
 
 def areAnagrams(s1, s2):
     return False
@@ -127,11 +164,12 @@ def testCollapseWhitespace():
 #################################################
 # Main
 #################################################
-'''''
+
 testVowelCount()
 testInterleave()
 testMostFrequentLetters()
 testHasBalancedParentheses()
+'''''
 testAreAnagrams()
 testRotateStringLeft()
 testRotateStringRight()
