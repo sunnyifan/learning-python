@@ -61,16 +61,41 @@ def hasBalancedParentheses(s):
     return tracker == 0
 
 def areAnagrams(s1, s2):
-    return False
+    s1 = s1.lower()
+    s2 = s2.lower()
+    char = string.ascii_lowercase
+    i = 0
+    while i < 26:
+        s1Count = s1.count(char[i])
+        s2Count = s2.count(char[i])
+        if s1Count != s2Count:
+            return False
+        i += 1
+    return True
 
 def rotateStringLeft(s, k):
-    return 42
+    if k > len(s):
+        k = k % len(s)
+    leftPart = s[k:]
+    rightPart = s[0:k]
+    output = leftPart + rightPart
+    return output
 
 def rotateStringRight(s, k):
-    return 42
+    if k > len(s):
+        k = k % len(s)
+    leftPart = s[(len(s) - k):]
+    rightPart = s[0:(len(s) - k)]
+    output = leftPart + rightPart
+    return output
 
 def collapseWhitespace(s):
-    return "Z"
+    if s == '':
+        return ''
+    output = ' '.join(s.split())
+    if s[-1] == ' ':
+        output += ' '
+    return output
 
 #################################################
 # Test Functions
@@ -169,9 +194,7 @@ testVowelCount()
 testInterleave()
 testMostFrequentLetters()
 testHasBalancedParentheses()
-'''''
 testAreAnagrams()
 testRotateStringLeft()
 testRotateStringRight()
 testCollapseWhitespace()
-'''''
