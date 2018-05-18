@@ -46,7 +46,24 @@ def leastFrequentLetters(s):
     return output
 
 def bestStudentAndAvg(gradebook):
-    return 42
+    max_avg = -100
+    output = ''
+    for line in gradebook.splitlines():
+        if line.startswith('#') or line == '':
+            continue
+        total = 0
+        num_of_subjects = 0
+        name = line.split(',')[0]
+        scores = line.split(',')[1:]
+        for factor in scores:
+                num_of_subjects += 1
+                total += int(factor)
+                avg = total // num_of_subjects
+        if max_avg <= avg:
+            max_avg = avg
+            best_student = name
+            output = best_student + ':' + str(max_avg)
+    return output
 
 #################################################
 # Test Functions
