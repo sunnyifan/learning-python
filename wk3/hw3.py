@@ -42,7 +42,26 @@ def patternedMessage(msg, pattern):
     return output
 
 def encodeRightLeftCipher(text, rows):
-    return 42
+    colums = (len(text) // rows) + 1
+    text = text + string.ascii_lowercase[::-1]
+    output = str(rows)
+    i = 0
+    s = 0
+    tracker = 0
+    line = ''
+    while i < rows:
+        while s <= (colums - 1) * 4:
+            line += text[i + s]
+            s += rows
+        if tracker % 2 == 0:
+            output += line
+        else:
+            output += line[::-1]
+        tracker += 1
+        i += 1
+        s = 0
+        line = ''
+    return output
 
 def decodeRightLeftCipher(cipher):
     return 42
