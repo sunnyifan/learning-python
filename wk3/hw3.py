@@ -64,7 +64,28 @@ def encodeRightLeftCipher(text, rows):
     return output
 
 def decodeRightLeftCipher(cipher):
-    return 42
+    rows = int(cipher[0])
+    colums = len(cipher) // rows
+    cipher = cipher[1:]
+    tracker = 0
+    i = 0
+    s = 0
+    output = ''
+    while s < colums:
+        while i < len(cipher):
+            if tracker % 2 == 0:
+                line = cipher[i: (i + colums)]
+            else:
+                line = (cipher[i: (i + colums)])[::-1]
+            output += cipher[s]
+            tracker += 1
+            i += colums
+        i = 0
+        tracker = 0
+        s += 1
+    while output[-1] in string.ascii_lowercase:
+        output = output[:-1]
+    return output
 
 ###### BONUS #######
 def topLevelFunctionNames(code): return 42
